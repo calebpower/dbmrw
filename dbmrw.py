@@ -29,7 +29,7 @@ def main():
                         first = False
                     key_decoded = key.decode("utf-8")
                     val_decoded = db[key].decode("utf-8")
-                    print(f'"{key_decoded}":"{val_decoded}"', end="")
+                    print(f'"{key_decoded}":{json.dumps(val_decoded)}', end="")
                 print("}")
 
         except dbm.error as e:
@@ -39,7 +39,7 @@ def main():
         try:
             with dbm.open(db_file, "r") as db:
                 val_decoded = db[args.db_key].decode("utf-8")
-                print(f'{{"{args.db_key}":"{val_decoded}"}}')
+                print(f'{{"{args.db_key}":{json.dumps(val_decoded)}}}')
         except dbm.error as e:
             print(f'File "{db_file}.db" does not exist.')
         except KeyError as e:
@@ -58,7 +58,7 @@ def main():
     else:
         with dbm.open(db_file, "c") as db:
             db[args.db_key] = args.db_value
-            print(f'{{"{args.db_key}":"{args.db_value}"}}')
+            print(f'{{"{args.db_key}":{json.dumps(args.db_value)}}}')
 
 
 if __name__ == "__main__":
